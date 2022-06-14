@@ -24,7 +24,6 @@ exports.login = [
     (req, res, next) => {
         try {
             user_service.register_user(req.body).then(function(create_res){
-                console.log('create_res', typeof(create_res));
                 if(create_res == undefined){
                     return api_response.errorReponse(res, create_res.data);
                 } else {

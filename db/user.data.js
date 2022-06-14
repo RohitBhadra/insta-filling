@@ -2,20 +2,27 @@ const UserModel = require('../models/user.model');
 var mongoose = require('mongoose');
 // mongoose.set('userFindndModify', false);
 
-const get_user = async (email) => {
-    return await UserModel.find({ email: email });
+const get_user = async (email, login_type, mobile) => {
+    if(login_type === 'email'){
+        return await UserModel.find({ email: email });
+    } else if (login_type === 'mobile') {
+        return await UserModel.find({ mobile: mobile });
+    } else {
+        return 'login type is empty !'
+    }
 }
 
-const create_users = async(firstname, lastname, phone, email,
-                        password, otp, is_active) => {
+const create_users = async(name, mobile, email, password, otp, 
+                            imageurl, login_type, is_active) => {
     try {
         var user = new UserModel({
-            firstname: firstname, 
-            lastname:  lastname, 
-            phone:  phone,
+            name: name, 
+            mobile:  mobile,
             email:  email,
             password: password, 
             otp: otp, 
+            imageurl: imageurl,
+            login_type: login_type, 
             is_active: is_active
         });
         return await user.save();

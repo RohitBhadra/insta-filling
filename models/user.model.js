@@ -8,7 +8,7 @@ const UsersSchema = new mongoose.Schema(
         email: { type: String, required: false },
         password: { type: String, required: false },
         otp: { type: String, required: false },
-        logintype: { type: String, required: false },
+        login_type: { type: String, required: false },
         imageurl: { type: String, required: false },
         isactive: { type: Boolean, default: true }
         
