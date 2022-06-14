@@ -25,43 +25,53 @@ const register_user = async(req_body) => {
 };
 
 const login = async(req_body) => {
-    let user = await user_data.get_user(req_body.email);
+    console.log('logn', login);
+    let user = await user_data.get_user({ email: req_body.email});
     if(user.length > 0) {
-        if(req_body.login_type === 'email' && req_body.password === user[0].password) {
-            let create_user = await user_data.create_users(req_body) (
-                req_body.firstname,
-                req_body.lastname,
-                req_body.email,
-                req_body.password,
-                req_body.is_active
-            );
-            if (!create_user) {
-                return { data: 'unable to create users' };
+        if(req_body.login_type === 'email') {
+            console.log('email', req_body);
+            if(req_body.email === user[0].email){
+            let user = await user_data.get_user(req_body.email);
+                return {
+                    success: true,
+                    data: user
+                };
             } else {
+                let create_user = await user_data.create_users(req_body) (
+                    req_body.name,
+                    req_body.email,
+                    req_body.password,
+                    req_body.is_active,
+                    req_body.imageurl,
+                    req_body.login_type
+                );
                 let user = await user_data.get_user(req_body.email);
                 return {
                     success: true,
                     data: user
                 };
-            }    
-        } else if(req_body.login_type === 'mobile' && req_body.otp === user[0].otp) {
-            let create_user = await user_data.create_users(req_body) (
-                req_body.firstname,
-                req_body.lastname,
-                req_body.phone,
-                req_body.password,
-                req_body.otp,
-                req_body.is_active
-            );
-            if (!create_user) {
-                return { data: 'unable to create users' };
-            } else {
-                let user = await user_data.get_user(req_body.otp);
+            }
+        } 
+        else if(req_body.login_type === 'mobile') {
+            console.log(req_body.login_type);
+            console.log('og', req_body);
+            if(req_body.mobile === user[0].mobile){
+                let user = await user_data.get_user(req_body.mobile);
                 return {
                     success: true,
                     data: user
                 };
-            }    
+            } else {
+                console.log('res', req_body)
+                let create_user = await user_data.create_users(req_body) (
+                    req_body.name,
+                    req_body.mobile,
+                    req.body.otp,
+                    req_body.imageurl,
+                    req_body.login_type,
+                    req_body.is_active
+                );
+            }
         } else {
             return {
                 success: false,
