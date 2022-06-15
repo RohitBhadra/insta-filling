@@ -16,7 +16,8 @@ const register_user = async(req_body) => {
                 let user = new UserModel({
                     mobile:  req_body.mobile,
                     // imageurl:  req_body.imageurl,
-                    login_type: req_body.login_type 
+                    login_type: req_body.login_type ,
+                    password: req_body.password
                     // is_active: is_active
                 });
                 return await user.save();
@@ -34,7 +35,8 @@ const register_user = async(req_body) => {
                 let user = new UserModel({
                     email:  req_body.email,
                     // imageurl:  req_body.imageurl,
-                    login_type: req_body.login_type 
+                    login_type: req_body.login_type,
+                    password: req_body.password 
                     // is_active: is_active
                 });
                 return await user.save();
@@ -85,7 +87,7 @@ const login = async(req_body) => {
                 let create_user = await user_data.create_users(req_body) (
                     req_body.name,
                     req_body.mobile,
-                    req.body.otp,
+                    req_body.password,
                     req_body.imageurl,
                     req_body.login_type,
                     req_body.is_active
