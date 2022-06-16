@@ -13,12 +13,12 @@ function random(min,max) {
 const register_user = async(req_body) => {
     try{
         if(req_body.login_type === 'mobile'){
-            let user = await user_data.get_user(null, req_body.login_type, req_body.mobile);
+            let user = await user_data.get_user(null, req_body.login_type, req_body.email_mobile);
             if(user.length > 0){
                 return user;
             } else {
                 let user = new UserModel({
-                    mobile:  req_body.mobile,
+                    mobile:  req_body.email_mobile,
                     // imageurl:  req_body.imageurl,
                     login_type: req_body.login_type ,
                     password: req_body.password,
@@ -29,7 +29,7 @@ const register_user = async(req_body) => {
             }
         }
         if(req_body.login_type === 'email'){
-            let user = await user_data.get_user(req_body.email, req_body.login_type, null);
+            let user = await user_data.get_user(req_body.email_mobile, req_body.login_type, null);
             if(user.length > 0){
                 return {
                     success: true,
@@ -37,7 +37,7 @@ const register_user = async(req_body) => {
                 };
             } else {
                 let user = new UserModel({
-                    email:  req_body.email,
+                    email:  req_body.email_mobile,
                     // imageurl:  req_body.imageurl,
                     login_type: req_body.login_type,
                     password: req_body.password,
