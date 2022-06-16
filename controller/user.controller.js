@@ -35,3 +35,21 @@ exports.login = [
         }
     }
 ]
+
+
+exports.verifyOtp = [
+   
+    (req, res, next) => {
+        try {
+            user_service.verify_otp(req.body).then(function(fetch_res){
+                if(fetch_res == undefined){
+                    return api_response.errorReponse(res, fetch_res);
+                } else {
+                    return api_response.sucessReponseWithData(res, "Fetch Users", fetch_res);
+                }
+            });
+        } catch (err) {
+            return api_response.errorReponse(res, err);
+        }
+    }
+]

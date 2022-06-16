@@ -112,8 +112,25 @@ const login = async(req_body) => {
     }
 };
 
+const verify_otp = async(req_body) => {
+    try{
+       
+        let user = await user_data.get_otp(req_body.otp);
+        if(user.length > 0){
+            return user;
+        } else {
+            return 'User Not Found';
+        }
+        
+        
+    } catch (err) {
+        console.log('ERR : ', err);
+    }  
+};
+
 module.exports = {
     register_user,
     get_user,
-    login
+    login,
+    verify_otp
 }

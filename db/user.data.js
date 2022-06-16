@@ -12,6 +12,10 @@ const get_user = async (email, login_type, mobile) => {
     }
 }
 
+const get_otp = async (otp) => {
+    return await UserModel.find({ otp: otp });
+}
+
 const create_users = async(name, mobile, email, password, otp, 
                             imageurl, login_type, is_active) => {
     try {
@@ -33,5 +37,6 @@ const create_users = async(name, mobile, email, password, otp,
 
 module.exports = {
     create_users,
-    get_user
+    get_user,
+    get_otp
 }

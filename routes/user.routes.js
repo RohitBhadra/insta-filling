@@ -10,6 +10,6 @@ router.post('/register', function(req, res){
   });
 
 router.post('/login', user_controller.login);
-// router.post('verifyOtp', user_controller.verifyOtp);
+router.post('/verifyOtp', user_controller.verifyOtp);
 
 module.exports = router;
