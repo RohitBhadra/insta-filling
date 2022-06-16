@@ -4,8 +4,8 @@ const UsersSchema = new mongoose.Schema(
     {
         // uuid: { type: String, required: true },
         name: { type: String, required: false },
-        mobile: { type: String, required: false },
-        email: { type: String, required: false },
+        email_mobile: { type: String, required: false },
+        // email: { type: String, required: false },
         password: { type: String, required: false },
         otp: { type: String, required: false },
         login_type: { type: String, required: false },

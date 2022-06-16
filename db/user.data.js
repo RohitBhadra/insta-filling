@@ -2,13 +2,12 @@ const UserModel = require('../models/user.model');
 var mongoose = require('mongoose');
 // mongoose.set('userFindndModify', false);
 
-const get_user = async (email, login_type, mobile) => {
-    if(login_type === 'email'){
-        return await UserModel.find({ email: email });
-    } else if (login_type === 'mobile') {
-        return await UserModel.find({ mobile: mobile });
-    } else {
-        return 'login type is empty !'
+const get_user = async (email_mobile) => {
+    if(email_mobile !== undefined){
+        return await UserModel.find({ email_mobile: email_mobile });
+    } 
+    else {
+        return 'Email/Mobile is empty !'
     }
 }
 
