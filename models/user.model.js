@@ -12,7 +12,13 @@ const UsersSchema = new mongoose.Schema(
         imageurl: { type: String, required: false },
         isactive: { type: Boolean, default: true }
         
-    }, {timestamps: true});
+    },{ versionKey: false }, {timestamps: true});
 
+    UsersSchema.set('toJSON', {
+        virtuals: true,
+        versionKey:false,
+        transform: function (doc, ret) {   delete ret._id  }
+      });
+      
 const User = mongoose.model('Users', UsersSchema);
 module.exports = User;

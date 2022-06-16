@@ -6,6 +6,10 @@ const get_user = async (user_email) => {
     return await user_data (user_email);
 };
 
+function random(min,max) {
+    return Math.floor((Math.random())*(max-min+1))+min;
+}
+
 const register_user = async(req_body) => {
     try{
         if(req_body.login_type === 'mobile'){
@@ -17,7 +21,8 @@ const register_user = async(req_body) => {
                     mobile:  req_body.mobile,
                     // imageurl:  req_body.imageurl,
                     login_type: req_body.login_type ,
-                    password: req_body.password
+                    password: req_body.password,
+                    otp: random(1000,9999)
                     // is_active: is_active
                 });
                 return await user.save();
@@ -26,7 +31,6 @@ const register_user = async(req_body) => {
         if(req_body.login_type === 'email'){
             let user = await user_data.get_user(req_body.email, req_body.login_type, null);
             if(user.length > 0){
-                console.log('empty');
                 return {
                     success: true,
                     data: user
@@ -36,7 +40,8 @@ const register_user = async(req_body) => {
                     email:  req_body.email,
                     // imageurl:  req_body.imageurl,
                     login_type: req_body.login_type,
-                    password: req_body.password 
+                    password: req_body.password,
+                    otp: random(1000, 9999)
                     // is_active: is_active
                 });
                 return await user.save();
