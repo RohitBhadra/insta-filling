@@ -14,36 +14,52 @@ const register_user = async(req_body) => {
     try{
         let user = await user_data.get_user(req_body.email_mobile);
         if(user.length > 0){
-            return user;
+            if(req_body.login_type === 'email_mobile'){
+                let user = await user_data.get_user(req_body.email_mobile, req_body.login_type);
+                if(user.length > 0){
+                    return user;
+                } else {
+                    let user = new UserModel({
+                        email_mobile:  req_body.email_mobile,
+                        // imageurl:  req_body.imageurl,
+                        login_type: req_body.login_type,
+                        password: req_body.password,
+                        otp: random(1000, 9999)
+                        // is_active: is_active
+                    });
+                    return await user.save();
+                }
+            }
+            if(req_body.login_type === 'google_auth'){
+                let user = await user_data.get_user(req_body.email_mobile, req_body.login_type);
+                if(user.length > 0){
+                    return user;
+                } else {
+                    let user = new UserModel({
+                        displayName: req_body.displayName,
+                        email_mobile: req_body.email_mobile,
+                        imageurl:  req_body.imageurl,
+                        login_type: req_body.login_type,
+                        // is_active: is_active
+                    });
+                    return await user.save();
+                }
+            }
+
         } else {
-            let user = new UserModel({
-                email_mobile: req_body.email_mobile,
-                // imageurl:  req_body.imageurl,
-                // login_type: req_body.login_type ,
-                password: req_body.password,
-                otp: random(1000,9999)
-                // is_active: is_active
-            });
-            return await user.save();
+            return 'User Not Found';
         }
-        // if(req_body.login_type === 'email'){
-        //     let user = await user_data.get_user(req_body.email_mobile, req_body.login_type, null);
-        //     if(user.length > 0){
-        //         return {
-        //             success: true,
-        //             data: user
-        //         };
-        //     } else {
-        //         let user = new UserModel({
-        //             email:  req_body.email_mobile,
-        //             // imageurl:  req_body.imageurl,
-        //             login_type: req_body.login_type,
-        //             password: req_body.password,
-        //             otp: random(1000, 9999)
-        //             // is_active: is_active
-        //         });
-        //         return await user.save();
-        //     }
+        
+        // } else {
+        //     let user = new UserModel({
+        //         email_mobile: req_body.email_mobile,
+        //         // imageurl:  req_body.imageurl,
+        //         // login_type: req_body.login_type ,
+        //         password: req_body.password,
+        //         otp: random(1000,9999)
+        //         // is_active: is_active
+        //     });
+        //     return await user.save();
         // }
         
     } catch (err) {
